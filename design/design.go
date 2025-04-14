@@ -1,46 +1,46 @@
 package design
 
 import (
-	. "goa.design/goa/v3/dsl"
+	"goa.design/goa/v3/dsl"
 )
 
-var _ = API("calc", func() {
-	Title("Calculator Service")
-	Description("A simple calculator service")
-	Server("calc", func() {
-		Host("localhost", func() {
-			URI("http://localhost:8080")
+var _ = dsl.API("calc", func() {
+	dsl.Title("Calculator Service")
+	dsl.Description("A simple calculator service")
+	dsl.Server("calc", func() {
+		dsl.Host("localhost", func() {
+			dsl.URI("http://localhost:8080")
 		})
 	})
 })
 
-var _ = Service("calc", func() {
-	Description("The calc service provides addition.")
+var _ = dsl.Service("calc", func() {
+	dsl.Description("The calc service provides addition.")
 
-	Method("add", func() {
-		Description("Adds two integers and returns the result.")
-		Payload(func() {
-			Attribute("a", Int)
-			Attribute("b", Int)
-			Required("a", "b")
+	dsl.Method("add", func() {
+		dsl.Description("Adds two integers and returns the result.")
+		dsl.Payload(func() {
+			dsl.Attribute("a", dsl.Int64, "First Operand")
+			dsl.Attribute("b", dsl.Int64, "Second Operand")
+			dsl.Required("a", "b")
 		})
-		Result(Int)
-		HTTP(func() {
-			GET("/add/{a}/{b}")
-			Response(StatusOK)
+		dsl.Result(dsl.Int64)
+		dsl.HTTP(func() {
+			dsl.GET("/add/{a}/{b}")
+			dsl.Response(dsl.StatusOK)
 		})
 	})
-	Method("subtract", func() {
-		Description("Subtracts two integers and returns the result.")
-		Payload(func() {
-			Attribute("a", Int)
-			Attribute("b", Int)
-			Required("a", "b")
+	dsl.Method("subtract", func() {
+		dsl.Description("Subtracts two integers and returns the result.")
+		dsl.Payload(func() {
+			dsl.Attribute("a", dsl.Int64)
+			dsl.Attribute("b", dsl.Int64)
+			dsl.Required("a", "b")
 		})
-		Result(Int)
-		HTTP(func() {
-			GET("/sub/{a}/{b}")
-			Response(StatusOK)
+		dsl.Result(dsl.Int64)
+		dsl.HTTP(func() {
+			dsl.GET("/sub/{a}/{b}")
+			dsl.Response(dsl.StatusOK)
 		})
 	})
 })

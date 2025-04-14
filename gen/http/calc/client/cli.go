@@ -17,22 +17,18 @@ import (
 // BuildAddPayload builds the payload for the calc add endpoint from CLI flags.
 func BuildAddPayload(calcAddA string, calcAddB string) (*calc.AddPayload, error) {
 	var err error
-	var a int
+	var a int64
 	{
-		var v int64
-		v, err = strconv.ParseInt(calcAddA, 10, strconv.IntSize)
-		a = int(v)
+		a, err = strconv.ParseInt(calcAddA, 10, 64)
 		if err != nil {
-			return nil, fmt.Errorf("invalid value for a, must be INT")
+			return nil, fmt.Errorf("invalid value for a, must be INT64")
 		}
 	}
-	var b int
+	var b int64
 	{
-		var v int64
-		v, err = strconv.ParseInt(calcAddB, 10, strconv.IntSize)
-		b = int(v)
+		b, err = strconv.ParseInt(calcAddB, 10, 64)
 		if err != nil {
-			return nil, fmt.Errorf("invalid value for b, must be INT")
+			return nil, fmt.Errorf("invalid value for b, must be INT64")
 		}
 	}
 	v := &calc.AddPayload{}
@@ -46,22 +42,18 @@ func BuildAddPayload(calcAddA string, calcAddB string) (*calc.AddPayload, error)
 // CLI flags.
 func BuildSubtractPayload(calcSubtractA string, calcSubtractB string) (*calc.SubtractPayload, error) {
 	var err error
-	var a int
+	var a int64
 	{
-		var v int64
-		v, err = strconv.ParseInt(calcSubtractA, 10, strconv.IntSize)
-		a = int(v)
+		a, err = strconv.ParseInt(calcSubtractA, 10, 64)
 		if err != nil {
-			return nil, fmt.Errorf("invalid value for a, must be INT")
+			return nil, fmt.Errorf("invalid value for a, must be INT64")
 		}
 	}
-	var b int
+	var b int64
 	{
-		var v int64
-		v, err = strconv.ParseInt(calcSubtractB, 10, strconv.IntSize)
-		b = int(v)
+		b, err = strconv.ParseInt(calcSubtractB, 10, 64)
 		if err != nil {
-			return nil, fmt.Errorf("invalid value for b, must be INT")
+			return nil, fmt.Errorf("invalid value for b, must be INT64")
 		}
 	}
 	v := &calc.SubtractPayload{}

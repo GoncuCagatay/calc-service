@@ -28,7 +28,7 @@ func UsageCommands() string {
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
-	return os.Args[0] + ` calc add --a 1633341662 --b 805352709` + "\n" +
+	return os.Args[0] + ` calc add --a 3793862871819669726 --b 8399553735696626949` + "\n" +
 		""
 }
 
@@ -45,8 +45,8 @@ func ParseEndpoint(
 		calcFlags = flag.NewFlagSet("calc", flag.ContinueOnError)
 
 		calcAddFlags = flag.NewFlagSet("add", flag.ExitOnError)
-		calcAddAFlag = calcAddFlags.String("a", "REQUIRED", "")
-		calcAddBFlag = calcAddFlags.String("b", "REQUIRED", "")
+		calcAddAFlag = calcAddFlags.String("a", "REQUIRED", "First Operand")
+		calcAddBFlag = calcAddFlags.String("b", "REQUIRED", "Second Operand")
 
 		calcSubtractFlags = flag.NewFlagSet("subtract", flag.ExitOnError)
 		calcSubtractAFlag = calcSubtractFlags.String("a", "REQUIRED", "")
@@ -152,25 +152,25 @@ Additional help:
 `, os.Args[0])
 }
 func calcAddUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] calc add -a INT -b INT
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] calc add -a INT64 -b INT64
 
 Adds two integers and returns the result.
-    -a INT: 
-    -b INT: 
+    -a INT64: First Operand
+    -b INT64: Second Operand
 
 Example:
-    %[1]s calc add --a 1633341662 --b 805352709
+    %[1]s calc add --a 3793862871819669726 --b 8399553735696626949
 `, os.Args[0])
 }
 
 func calcSubtractUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] calc subtract -a INT -b INT
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] calc subtract -a INT64 -b INT64
 
 Subtracts two integers and returns the result.
-    -a INT: 
-    -b INT: 
+    -a INT64: 
+    -b INT64: 
 
 Example:
-    %[1]s calc subtract --a 242624345 --b 1318575518
+    %[1]s calc subtract --a 5401762099778430809 --b 1918630006328122782
 `, os.Args[0])
 }

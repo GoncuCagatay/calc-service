@@ -22,8 +22,8 @@ import (
 // to call the "calc" service "add" endpoint
 func (c *Client) BuildAddRequest(ctx context.Context, v any) (*http.Request, error) {
 	var (
-		a int
-		b int
+		a int64
+		b int64
 	)
 	{
 		p, ok := v.(*calc.AddPayload)
@@ -65,7 +65,7 @@ func DecodeAddResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody
 		switch resp.StatusCode {
 		case http.StatusOK:
 			var (
-				body int
+				body int64
 				err  error
 			)
 			err = decoder(resp).Decode(&body)
@@ -84,8 +84,8 @@ func DecodeAddResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody
 // set to call the "calc" service "subtract" endpoint
 func (c *Client) BuildSubtractRequest(ctx context.Context, v any) (*http.Request, error) {
 	var (
-		a int
-		b int
+		a int64
+		b int64
 	)
 	{
 		p, ok := v.(*calc.SubtractPayload)
@@ -127,7 +127,7 @@ func DecodeSubtractResponse(decoder func(*http.Response) goahttp.Decoder, restor
 		switch resp.StatusCode {
 		case http.StatusOK:
 			var (
-				body int
+				body int64
 				err  error
 			)
 			err = decoder(resp).Decode(&body)

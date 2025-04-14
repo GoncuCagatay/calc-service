@@ -23,12 +23,16 @@ paths:
             parameters:
                 - name: a
                   in: path
+                  description: First Operand
                   required: true
                   type: integer
+                  format: int64
                 - name: b
                   in: path
+                  description: Second Operand
                   required: true
                   type: integer
+                  format: int64
             responses:
                 "200":
                     description: OK response.
@@ -49,10 +53,12 @@ paths:
                   in: path
                   required: true
                   type: integer
+                  format: int64
                 - name: b
                   in: path
                   required: true
                   type: integer
+                  format: int64
             responses:
                 "200":
                     description: OK response.

@@ -20,11 +20,11 @@ func (s statusCode) StatusCode() int {
 // Service logic
 type calcService struct{}
 
-func (s *calcService) Add(ctx context.Context, p *calc.AddPayload) (int, error) {
+func (s *calcService) Add(ctx context.Context, p *calc.AddPayload) (int64, error) {
 	return p.A + p.B, nil
 }
 
-func (s *calcService) Subtract(ctx context.Context, p *calc.SubtractPayload) (int, error) {
+func (s *calcService) Subtract(ctx context.Context, p *calc.SubtractPayload) (int64, error) {
 	return p.A - p.B, nil
 }
 
