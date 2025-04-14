@@ -41,3 +41,32 @@ func BuildAddPayload(calcAddA string, calcAddB string) (*calc.AddPayload, error)
 
 	return v, nil
 }
+
+// BuildSubtractPayload builds the payload for the calc subtract endpoint from
+// CLI flags.
+func BuildSubtractPayload(calcSubtractA string, calcSubtractB string) (*calc.SubtractPayload, error) {
+	var err error
+	var a int
+	{
+		var v int64
+		v, err = strconv.ParseInt(calcSubtractA, 10, strconv.IntSize)
+		a = int(v)
+		if err != nil {
+			return nil, fmt.Errorf("invalid value for a, must be INT")
+		}
+	}
+	var b int
+	{
+		var v int64
+		v, err = strconv.ParseInt(calcSubtractB, 10, strconv.IntSize)
+		b = int(v)
+		if err != nil {
+			return nil, fmt.Errorf("invalid value for b, must be INT")
+		}
+	}
+	v := &calc.SubtractPayload{}
+	v.A = a
+	v.B = b
+
+	return v, nil
+}

@@ -15,13 +15,15 @@ import (
 
 // Client is the "calc" service client.
 type Client struct {
-	AddEndpoint goa.Endpoint
+	AddEndpoint      goa.Endpoint
+	SubtractEndpoint goa.Endpoint
 }
 
 // NewClient initializes a "calc" service client given the endpoints.
-func NewClient(add goa.Endpoint) *Client {
+func NewClient(add, subtract goa.Endpoint) *Client {
 	return &Client{
-		AddEndpoint: add,
+		AddEndpoint:      add,
+		SubtractEndpoint: subtract,
 	}
 }
 
@@ -29,6 +31,16 @@ func NewClient(add goa.Endpoint) *Client {
 func (c *Client) Add(ctx context.Context, p *AddPayload) (res int, err error) {
 	var ires any
 	ires, err = c.AddEndpoint(ctx, p)
+	if err != nil {
+		return
+	}
+	return ires.(int), nil
+}
+
+// Subtract calls the "subtract" endpoint of the "calc" service.
+func (c *Client) Subtract(ctx context.Context, p *SubtractPayload) (res int, err error) {
+	var ires any
+	ires, err = c.SubtractEndpoint(ctx, p)
 	if err != nil {
 		return
 	}

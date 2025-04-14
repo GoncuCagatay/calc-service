@@ -13,8 +13,10 @@ import (
 
 // The calc service provides addition.
 type Service interface {
-	// Adds two integes and returns the result.
+	// Adds two integers and returns the result.
 	Add(context.Context, *AddPayload) (res int, err error)
+	// Subtracts two integers and returns the result.
+	Subtract(context.Context, *SubtractPayload) (res int, err error)
 }
 
 // APIName is the name of the API as defined in the design.
@@ -31,10 +33,16 @@ const ServiceName = "calc"
 // MethodNames lists the service method names as defined in the design. These
 // are the same values that are set in the endpoint request contexts under the
 // MethodKey key.
-var MethodNames = [1]string{"add"}
+var MethodNames = [2]string{"add", "subtract"}
 
 // AddPayload is the payload type of the calc service add method.
 type AddPayload struct {
+	A int
+	B int
+}
+
+// SubtractPayload is the payload type of the calc service subtract method.
+type SubtractPayload struct {
 	A int
 	B int
 }

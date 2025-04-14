@@ -15,3 +15,8 @@ import (
 func AddCalcPath(a int, b int) string {
 	return fmt.Sprintf("/add/%v/%v", a, b)
 }
+
+// SubtractCalcPath returns the URL path to the calc service subtract HTTP endpoint.
+func SubtractCalcPath(a int, b int) string {
+	return fmt.Sprintf("/sub/%v/%v", a, b)
+}

@@ -79,3 +79,65 @@ func DecodeAddResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody
 		}
 	}
 }
+
+// BuildSubtractRequest instantiates a HTTP request object with method and path
+// set to call the "calc" service "subtract" endpoint
+func (c *Client) BuildSubtractRequest(ctx context.Context, v any) (*http.Request, error) {
+	var (
+		a int
+		b int
+	)
+	{
+		p, ok := v.(*calc.SubtractPayload)
+		if !ok {
+			return nil, goahttp.ErrInvalidType("calc", "subtract", "*calc.SubtractPayload", v)
+		}
+		a = p.A
+		b = p.B
+	}
+	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: SubtractCalcPath(a, b)}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		return nil, goahttp.ErrInvalidURL("calc", "subtract", u.String(), err)
+	}
+	if ctx != nil {
+		req = req.WithContext(ctx)
+	}
+
+	return req, nil
+}
+
+// DecodeSubtractResponse returns a decoder for responses returned by the calc
+// subtract endpoint. restoreBody controls whether the response body should be
+// restored after having been read.
+func DecodeSubtractResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (any, error) {
+	return func(resp *http.Response) (any, error) {
+		if restoreBody {
+			b, err := io.ReadAll(resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			resp.Body = io.NopCloser(bytes.NewBuffer(b))
+			defer func() {
+				resp.Body = io.NopCloser(bytes.NewBuffer(b))
+			}()
+		} else {
+			defer resp.Body.Close()
+		}
+		switch resp.StatusCode {
+		case http.StatusOK:
+			var (
+				body int
+				err  error
+			)
+			err = decoder(resp).Decode(&body)
+			if err != nil {
+				return nil, goahttp.ErrDecodingError("calc", "subtract", err)
+			}
+			return body, nil
+		default:
+			body, _ := io.ReadAll(resp.Body)
+			return nil, goahttp.ErrInvalidResponse("calc", "subtract", resp.StatusCode, string(body))
+		}
+	}
+}

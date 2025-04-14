@@ -16,17 +16,30 @@ var _ = API("calc", func() {
 
 var _ = Service("calc", func() {
 	Description("The calc service provides addition.")
-	
+
 	Method("add", func() {
-		Description("Adds two integes and returns the result.")
+		Description("Adds two integers and returns the result.")
 		Payload(func() {
 			Attribute("a", Int)
 			Attribute("b", Int)
 			Required("a", "b")
 		})
 		Result(Int)
-		HTTP(func(){
+		HTTP(func() {
 			GET("/add/{a}/{b}")
+			Response(StatusOK)
+		})
+	})
+	Method("subtract", func() {
+		Description("Subtracts two integers and returns the result.")
+		Payload(func() {
+			Attribute("a", Int)
+			Attribute("b", Int)
+			Required("a", "b")
+		})
+		Result(Int)
+		HTTP(func() {
+			GET("/sub/{a}/{b}")
 			Response(StatusOK)
 		})
 	})

@@ -22,13 +22,13 @@ import (
 //
 //	command (subcommand1|subcommand2|...)
 func UsageCommands() string {
-	return `calc add
+	return `calc (add|subtract)
 `
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
-	return os.Args[0] + ` calc add --a 65727807 --b 55454848` + "\n" +
+	return os.Args[0] + ` calc add --a 1633341662 --b 805352709` + "\n" +
 		""
 }
 
@@ -47,9 +47,14 @@ func ParseEndpoint(
 		calcAddFlags = flag.NewFlagSet("add", flag.ExitOnError)
 		calcAddAFlag = calcAddFlags.String("a", "REQUIRED", "")
 		calcAddBFlag = calcAddFlags.String("b", "REQUIRED", "")
+
+		calcSubtractFlags = flag.NewFlagSet("subtract", flag.ExitOnError)
+		calcSubtractAFlag = calcSubtractFlags.String("a", "REQUIRED", "")
+		calcSubtractBFlag = calcSubtractFlags.String("b", "REQUIRED", "")
 	)
 	calcFlags.Usage = calcUsage
 	calcAddFlags.Usage = calcAddUsage
+	calcSubtractFlags.Usage = calcSubtractUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -88,6 +93,9 @@ func ParseEndpoint(
 			case "add":
 				epf = calcAddFlags
 
+			case "subtract":
+				epf = calcSubtractFlags
+
 			}
 
 		}
@@ -116,6 +124,9 @@ func ParseEndpoint(
 			case "add":
 				endpoint = c.Add()
 				data, err = calcc.BuildAddPayload(*calcAddAFlag, *calcAddBFlag)
+			case "subtract":
+				endpoint = c.Subtract()
+				data, err = calcc.BuildSubtractPayload(*calcSubtractAFlag, *calcSubtractBFlag)
 			}
 		}
 	}
@@ -133,7 +144,8 @@ Usage:
     %[1]s [globalflags] calc COMMAND [flags]
 
 COMMAND:
-    add: Adds two integes and returns the result.
+    add: Adds two integers and returns the result.
+    subtract: Subtracts two integers and returns the result.
 
 Additional help:
     %[1]s calc COMMAND --help
@@ -142,11 +154,23 @@ Additional help:
 func calcAddUsage() {
 	fmt.Fprintf(os.Stderr, `%[1]s [flags] calc add -a INT -b INT
 
-Adds two integes and returns the result.
+Adds two integers and returns the result.
     -a INT: 
     -b INT: 
 
 Example:
-    %[1]s calc add --a 65727807 --b 55454848
+    %[1]s calc add --a 1633341662 --b 805352709
+`, os.Args[0])
+}
+
+func calcSubtractUsage() {
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] calc subtract -a INT -b INT
+
+Subtracts two integers and returns the result.
+    -a INT: 
+    -b INT: 
+
+Example:
+    %[1]s calc subtract --a 242624345 --b 1318575518
 `, os.Args[0])
 }

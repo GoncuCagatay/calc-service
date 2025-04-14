@@ -24,6 +24,10 @@ func (s *calcService) Add(ctx context.Context, p *calc.AddPayload) (int, error) 
 	return p.A + p.B, nil
 }
 
+func (s *calcService) Subtract(ctx context.Context, p *calc.SubtractPayload) (int, error) {
+	return p.A - p.B, nil
+}
+
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {

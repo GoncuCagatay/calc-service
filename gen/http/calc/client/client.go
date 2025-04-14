@@ -20,6 +20,10 @@ type Client struct {
 	// Add Doer is the HTTP client used to make requests to the add endpoint.
 	AddDoer goahttp.Doer
 
+	// Subtract Doer is the HTTP client used to make requests to the subtract
+	// endpoint.
+	SubtractDoer goahttp.Doer
+
 	// RestoreResponseBody controls whether the response bodies are reset after
 	// decoding so they can be read again.
 	RestoreResponseBody bool
@@ -41,6 +45,7 @@ func NewClient(
 ) *Client {
 	return &Client{
 		AddDoer:             doer,
+		SubtractDoer:        doer,
 		RestoreResponseBody: restoreBody,
 		scheme:              scheme,
 		host:                host,
@@ -63,6 +68,25 @@ func (c *Client) Add() goa.Endpoint {
 		resp, err := c.AddDoer.Do(req)
 		if err != nil {
 			return nil, goahttp.ErrRequestError("calc", "add", err)
+		}
+		return decodeResponse(resp)
+	}
+}
+
+// Subtract returns an endpoint that makes HTTP requests to the calc service
+// subtract server.
+func (c *Client) Subtract() goa.Endpoint {
+	var (
+		decodeResponse = DecodeSubtractResponse(c.decoder, c.RestoreResponseBody)
+	)
+	return func(ctx context.Context, v any) (any, error) {
+		req, err := c.BuildSubtractRequest(ctx, v)
+		if err != nil {
+			return nil, err
+		}
+		resp, err := c.SubtractDoer.Do(req)
+		if err != nil {
+			return nil, goahttp.ErrRequestError("calc", "subtract", err)
 		}
 		return decodeResponse(resp)
 	}
