@@ -10,17 +10,16 @@ package server
 import (
 	"context"
 	"net/http"
-	"strconv"
 
 	goahttp "goa.design/goa/v3/http"
-	goa "goa.design/goa/v3/pkg"
 )
 
 // EncodeAddResponse returns an encoder for responses returned by the calc add
 // endpoint.
 func EncodeAddResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, any) error {
 	return func(ctx context.Context, w http.ResponseWriter, v any) error {
-		res, _ := v.(int64)
+		res, _ := v.(string)
+		ctx = context.WithValue(ctx, goahttp.ContentTypeKey, "text/plain")
 		enc := encoder(ctx, w)
 		body := res
 		w.WriteHeader(http.StatusOK)
@@ -33,31 +32,13 @@ func EncodeAddResponse(encoder func(context.Context, http.ResponseWriter) goahtt
 func DecodeAddRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (any, error) {
 	return func(r *http.Request) (any, error) {
 		var (
-			a   int64
-			b   int64
-			err error
+			a string
+			b string
 
 			params = mux.Vars(r)
 		)
-		{
-			aRaw := params["a"]
-			v, err2 := strconv.ParseInt(aRaw, 10, 64)
-			if err2 != nil {
-				err = goa.MergeErrors(err, goa.InvalidFieldTypeError("a", aRaw, "integer"))
-			}
-			a = v
-		}
-		{
-			bRaw := params["b"]
-			v, err2 := strconv.ParseInt(bRaw, 10, 64)
-			if err2 != nil {
-				err = goa.MergeErrors(err, goa.InvalidFieldTypeError("b", bRaw, "integer"))
-			}
-			b = v
-		}
-		if err != nil {
-			return nil, err
-		}
+		a = params["a"]
+		b = params["b"]
 		payload := NewAddPayload(a, b)
 
 		return payload, nil
@@ -68,7 +49,8 @@ func DecodeAddRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Dec
 // subtract endpoint.
 func EncodeSubtractResponse(encoder func(context.Context, http.ResponseWriter) goahttp.Encoder) func(context.Context, http.ResponseWriter, any) error {
 	return func(ctx context.Context, w http.ResponseWriter, v any) error {
-		res, _ := v.(int64)
+		res, _ := v.(string)
+		ctx = context.WithValue(ctx, goahttp.ContentTypeKey, "text/plain")
 		enc := encoder(ctx, w)
 		body := res
 		w.WriteHeader(http.StatusOK)
@@ -81,31 +63,13 @@ func EncodeSubtractResponse(encoder func(context.Context, http.ResponseWriter) g
 func DecodeSubtractRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (any, error) {
 	return func(r *http.Request) (any, error) {
 		var (
-			a   int64
-			b   int64
-			err error
+			a string
+			b string
 
 			params = mux.Vars(r)
 		)
-		{
-			aRaw := params["a"]
-			v, err2 := strconv.ParseInt(aRaw, 10, 64)
-			if err2 != nil {
-				err = goa.MergeErrors(err, goa.InvalidFieldTypeError("a", aRaw, "integer"))
-			}
-			a = v
-		}
-		{
-			bRaw := params["b"]
-			v, err2 := strconv.ParseInt(bRaw, 10, 64)
-			if err2 != nil {
-				err = goa.MergeErrors(err, goa.InvalidFieldTypeError("b", bRaw, "integer"))
-			}
-			b = v
-		}
-		if err != nil {
-			return nil, err
-		}
+		a = params["a"]
+		b = params["b"]
 		payload := NewSubtractPayload(a, b)
 
 		return payload, nil

@@ -18,27 +18,25 @@ paths:
             tags:
                 - calc
             summary: add calc
-            description: Adds two integers and returns the result.
             operationId: calc#add
+            produces:
+                - text/plain
             parameters:
                 - name: a
                   in: path
                   description: First Operand
                   required: true
-                  type: integer
-                  format: int64
+                  type: string
                 - name: b
                   in: path
                   description: Second Operand
                   required: true
-                  type: integer
-                  format: int64
+                  type: string
             responses:
                 "200":
                     description: OK response.
                     schema:
-                        type: integer
-                        format: int64
+                        type: string
             schemes:
                 - http
     /sub/{a}/{b}:
@@ -48,22 +46,23 @@ paths:
             summary: subtract calc
             description: Subtracts two integers and returns the result.
             operationId: calc#subtract
+            produces:
+                - text/plain
             parameters:
                 - name: a
                   in: path
+                  description: First Operand
                   required: true
-                  type: integer
-                  format: int64
+                  type: string
                 - name: b
                   in: path
+                  description: Second Operand
                   required: true
-                  type: integer
-                  format: int64
+                  type: string
             responses:
                 "200":
                     description: OK response.
                     schema:
-                        type: integer
-                        format: int64
+                        type: string
             schemes:
                 - http

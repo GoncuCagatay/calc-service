@@ -11,7 +11,6 @@ paths:
             tags:
                 - calc
             summary: add calc
-            description: Adds two integers and returns the result.
             operationId: calc#add
             parameters:
                 - name: a
@@ -19,31 +18,28 @@ paths:
                   description: First Operand
                   required: true
                   schema:
-                    type: integer
+                    type: string
                     description: First Operand
-                    example: 5855163322465186600
-                    format: int64
-                  example: 1385266597691519195
+                    example: Odit non.
+                  example: Et facere aperiam ut rerum ipsam.
                 - name: b
                   in: path
                   description: Second Operand
                   required: true
                   schema:
-                    type: integer
+                    type: string
                     description: Second Operand
-                    example: 686605435966370186
-                    format: int64
-                  example: 8228676432890045784
+                    example: Consequatur omnis velit.
+                  example: Unde omnis.
             responses:
                 "200":
                     description: OK response.
                     content:
-                        application/json:
+                        text/plain:
                             schema:
-                                type: integer
-                                example: 1698882017578366363
-                                format: int64
-                            example: 5308928064408640979
+                                type: string
+                                example: Iure repellat.
+                            example: Qui mollitia.
     /sub/{a}/{b}:
         get:
             tags:
@@ -54,30 +50,31 @@ paths:
             parameters:
                 - name: a
                   in: path
+                  description: First Operand
                   required: true
                   schema:
-                    type: integer
-                    example: 1016925590796087323
-                    format: int64
-                  example: 7309877832173772408
+                    type: string
+                    description: First Operand
+                    example: Quis consectetur voluptas.
+                  example: Neque consequatur maiores aut.
                 - name: b
                   in: path
+                  description: Second Operand
                   required: true
                   schema:
-                    type: integer
-                    example: 3237209857320107068
-                    format: int64
-                  example: 1228682945796019344
+                    type: string
+                    description: Second Operand
+                    example: Et consequatur quis dolorum corporis officiis rerum.
+                  example: Quia dolores consequatur cum itaque.
             responses:
                 "200":
                     description: OK response.
                     content:
-                        application/json:
+                        text/plain:
                             schema:
-                                type: integer
-                                example: 6747375795581831989
-                                format: int64
-                            example: 4886963557863946648
+                                type: string
+                                example: Culpa odit.
+                            example: Nam deserunt et tempora atque.
 components: {}
 tags:
     - name: calc

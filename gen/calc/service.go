@@ -13,10 +13,10 @@ import (
 
 // The calc service provides addition.
 type Service interface {
-	// Adds two integers and returns the result.
-	Add(context.Context, *AddPayload) (res int64, err error)
+	// Add implements add.
+	Add(context.Context, *AddPayload) (res string, err error)
 	// Subtracts two integers and returns the result.
-	Subtract(context.Context, *SubtractPayload) (res int64, err error)
+	Subtract(context.Context, *SubtractPayload) (res string, err error)
 }
 
 // APIName is the name of the API as defined in the design.
@@ -38,13 +38,15 @@ var MethodNames = [2]string{"add", "subtract"}
 // AddPayload is the payload type of the calc service add method.
 type AddPayload struct {
 	// First Operand
-	A int64
+	A string
 	// Second Operand
-	B int64
+	B string
 }
 
 // SubtractPayload is the payload type of the calc service subtract method.
 type SubtractPayload struct {
-	A int64
-	B int64
+	// First Operand
+	A string
+	// Second Operand
+	B string
 }

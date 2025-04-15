@@ -28,7 +28,7 @@ func UsageCommands() string {
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
-	return os.Args[0] + ` calc add --a 3793862871819669726 --b 8399553735696626949` + "\n" +
+	return os.Args[0] + ` calc add --a "Quis quis aliquid architecto facere rem alias." --b "Quibusdam non et sint ut."` + "\n" +
 		""
 }
 
@@ -49,8 +49,8 @@ func ParseEndpoint(
 		calcAddBFlag = calcAddFlags.String("b", "REQUIRED", "Second Operand")
 
 		calcSubtractFlags = flag.NewFlagSet("subtract", flag.ExitOnError)
-		calcSubtractAFlag = calcSubtractFlags.String("a", "REQUIRED", "")
-		calcSubtractBFlag = calcSubtractFlags.String("b", "REQUIRED", "")
+		calcSubtractAFlag = calcSubtractFlags.String("a", "REQUIRED", "First Operand")
+		calcSubtractBFlag = calcSubtractFlags.String("b", "REQUIRED", "Second Operand")
 	)
 	calcFlags.Usage = calcUsage
 	calcAddFlags.Usage = calcAddUsage
@@ -144,7 +144,7 @@ Usage:
     %[1]s [globalflags] calc COMMAND [flags]
 
 COMMAND:
-    add: Adds two integers and returns the result.
+    add: Add implements add.
     subtract: Subtracts two integers and returns the result.
 
 Additional help:
@@ -152,25 +152,25 @@ Additional help:
 `, os.Args[0])
 }
 func calcAddUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] calc add -a INT64 -b INT64
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] calc add -a STRING -b STRING
 
-Adds two integers and returns the result.
-    -a INT64: First Operand
-    -b INT64: Second Operand
+Add implements add.
+    -a STRING: First Operand
+    -b STRING: Second Operand
 
 Example:
-    %[1]s calc add --a 3793862871819669726 --b 8399553735696626949
+    %[1]s calc add --a "Quis quis aliquid architecto facere rem alias." --b "Quibusdam non et sint ut."
 `, os.Args[0])
 }
 
 func calcSubtractUsage() {
-	fmt.Fprintf(os.Stderr, `%[1]s [flags] calc subtract -a INT64 -b INT64
+	fmt.Fprintf(os.Stderr, `%[1]s [flags] calc subtract -a STRING -b STRING
 
 Subtracts two integers and returns the result.
-    -a INT64: 
-    -b INT64: 
+    -a STRING: First Operand
+    -b STRING: Second Operand
 
 Example:
-    %[1]s calc subtract --a 5401762099778430809 --b 1918630006328122782
+    %[1]s calc subtract --a "Quasi est eum ad." --b "Quibusdam eius."
 `, os.Args[0])
 }

@@ -12,11 +12,11 @@ import (
 )
 
 // AddCalcPath returns the URL path to the calc service add HTTP endpoint.
-func AddCalcPath(a int64, b int64) string {
+func AddCalcPath(a string, b string) string {
 	return fmt.Sprintf("/add/%v/%v", a, b)
 }
 
 // SubtractCalcPath returns the URL path to the calc service subtract HTTP endpoint.
-func SubtractCalcPath(a int64, b int64) string {
+func SubtractCalcPath(a string, b string) string {
 	return fmt.Sprintf("/sub/%v/%v", a, b)
 }

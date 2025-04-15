@@ -8,28 +8,18 @@
 package client
 
 import (
-	"fmt"
-	"strconv"
-
 	calc "github.com/GoncuCagatay/calc-service/gen/calc"
 )
 
 // BuildAddPayload builds the payload for the calc add endpoint from CLI flags.
 func BuildAddPayload(calcAddA string, calcAddB string) (*calc.AddPayload, error) {
-	var err error
-	var a int64
+	var a string
 	{
-		a, err = strconv.ParseInt(calcAddA, 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("invalid value for a, must be INT64")
-		}
+		a = calcAddA
 	}
-	var b int64
+	var b string
 	{
-		b, err = strconv.ParseInt(calcAddB, 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("invalid value for b, must be INT64")
-		}
+		b = calcAddB
 	}
 	v := &calc.AddPayload{}
 	v.A = a
@@ -41,20 +31,13 @@ func BuildAddPayload(calcAddA string, calcAddB string) (*calc.AddPayload, error)
 // BuildSubtractPayload builds the payload for the calc subtract endpoint from
 // CLI flags.
 func BuildSubtractPayload(calcSubtractA string, calcSubtractB string) (*calc.SubtractPayload, error) {
-	var err error
-	var a int64
+	var a string
 	{
-		a, err = strconv.ParseInt(calcSubtractA, 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("invalid value for a, must be INT64")
-		}
+		a = calcSubtractA
 	}
-	var b int64
+	var b string
 	{
-		b, err = strconv.ParseInt(calcSubtractB, 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("invalid value for b, must be INT64")
-		}
+		b = calcSubtractB
 	}
 	v := &calc.SubtractPayload{}
 	v.A = a

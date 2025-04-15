@@ -12,7 +12,7 @@ import (
 )
 
 // NewAddPayload builds a calc service add endpoint payload.
-func NewAddPayload(a int64, b int64) *calc.AddPayload {
+func NewAddPayload(a string, b string) *calc.AddPayload {
 	v := &calc.AddPayload{}
 	v.A = a
 	v.B = b
@@ -21,7 +21,7 @@ func NewAddPayload(a int64, b int64) *calc.AddPayload {
 }
 
 // NewSubtractPayload builds a calc service subtract endpoint payload.
-func NewSubtractPayload(a int64, b int64) *calc.SubtractPayload {
+func NewSubtractPayload(a string, b string) *calc.SubtractPayload {
 	v := &calc.SubtractPayload{}
 	v.A = a
 	v.B = b
